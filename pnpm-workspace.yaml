@@ -1,0 +1,11 @@
+packages:
+  - apps/*
+  - packages/*
+
+# React Native/Expo: dependencias hoisted en monorepo
+nodeLinker: hoisted
+
+allowBuilds:
+  dtrace-provider: false
+  esbuild: true
+  protobufjs: false

@@ -1,0 +1,27 @@
+# Netlify: sitio estático (landing + panel). Sin SSR ni funciones.
+[build]
+  base = "/"
+  command = "corepack enable && pnpm install --frozen-lockfile && pnpm build:web"
+  publish = "apps/web/dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Fallback SPA: solo aplica si no existe un archivo estático en esa ruta
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
+    Permissions-Policy = "camera=(), geolocation=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

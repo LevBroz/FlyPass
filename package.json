@@ -1,0 +1,29 @@
+{
+  "name": "pasaporte-guanaco",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.16.0",
+  "engines": { "node": ">=22.12" },
+  "scripts": {
+    "dev:api": "pnpm --filter @pg/api dev",
+    "dev:web": "pnpm --filter @pg/web dev",
+    "dev:mobile": "pnpm --filter @pg/mobile start",
+    "build:contracts": "pnpm --filter @pg/contracts build",
+    "build:api": "pnpm --filter @pg/contracts build && pnpm --filter @pg/api build",
+    "build:web": "pnpm --filter @pg/contracts build && pnpm --filter @pg/web build",
+    "typecheck": "pnpm -r typecheck && tsc -p scripts/tsconfig.json",
+    "test": "pnpm -r test",
+    "demo:users": "tsx --env-file-if-exists=.env scripts/create-demo-users.ts",
+    "demo:reset": "tsx --env-file-if-exists=.env scripts/reset-demo.ts",
+    "demo:qr": "tsx scripts/generate-qr.ts"
+  },
+  "devDependencies": {
+    "@supabase/supabase-js": "2.119.0",
+    "qrcode": "1.5.4",
+    "@types/qrcode": "1.5.5",
+    "tsx": "4.23.15",
+    "typescript": "~5.9.3",
+    "@types/node": "^22.10.0"
+  }
+}

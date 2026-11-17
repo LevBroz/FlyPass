@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "Pasaporte Guanaco Demo",
+    "slug": "pasaporte-guanaco",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "pguanaco",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#102A35",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.pasaporteguanaco.demo"
+    },
+    "android": {
+      "package": "com.pasaporteguanaco.demo",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#102A35",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Usamos la cámara solo para leer el código QR del establecimiento y solicitar tu sello.",
+          "recordAudioAndroid": false,
+          "barcodeScannerEnabled": true
+        }
+      ],
+      [
+        "expo-secure-store",
+        {
+          "configureAndroidBackup": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": false
+    }
+  }
+}
