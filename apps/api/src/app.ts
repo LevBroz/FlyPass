@@ -36,9 +36,11 @@ export async function buildApp(env: Env, ctx: Ctx): Promise<FastifyInstance> {
   });
 
   // CORS limita navegadores; NO sustituye la autenticación.
-  const origins = env.CORS_ORIGINS.split(',').map((s) => s.trim()).filter(Boolean);
+  const norm = (o: string) => o.trim().replace(/^["']|["']$/g, '').replace(/\/+$/, '').toLowerCase();
+  const origins = env.CORS_ORIGINS.split(',').map(norm).filter(Boolean);
+  if (!origins.length) app.log.warn('CORS_ORIGINS vacío: ningún navegador podrá llamar a la API');
   await app.register(cors, {
-    origin: (origin, cb) => cb(null, !origin || origins.includes(origin)),
+    origin: (origin, cb) => cb(null, !origin || origins.includes(norm(origin))),
     methods: ['GET', 'POST', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['authorization', 'content-type', 'idempotency-key', 'x-request-id'],
     exposedHeaders: ['x-request-id'],
