@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
 
 export function Login() {
-  const { session, me, signIn } = useAuth();
+  const { session, me, meError, reloadMe, signOut, signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -35,6 +35,15 @@ export function Login() {
         {session && me && !me.memberships.length && me.platformRole !== 'admin' && (
           <div className="alert alert-info">
             Tu cuenta es de viajero. Usa la app móvil para tu pasaporte.
+          </div>
+        )}
+        {session && !me && meError && (
+          <div className="alert alert-error stack">
+            <div>{meError}</div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button type="button" className="btn" onClick={() => void reloadMe()}>Reintentar</button>
+              <button type="button" className="btn" onClick={() => void signOut()}>Salir</button>
+            </div>
           </div>
         )}
         <form onSubmit={onSubmit} className="stack">

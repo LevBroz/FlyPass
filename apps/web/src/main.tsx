@@ -13,10 +13,10 @@ import { BranchLink } from './pages/BranchLink';
 import type { ReactNode } from 'react';
 
 function RequireAuth({ children, admin }: { children: ReactNode; admin?: boolean }) {
-  const { session, me, loading } = useAuth();
+  const { session, me, meError, loading } = useAuth();
   if (loading) return <div className="container muted">Cargando…</div>;
   if (!session) return <Navigate to="/login" replace />;
-  if (!me) return <div className="container"><div className="alert alert-error">No se pudo cargar tu perfil. Revisa la conexión con la API.</div></div>;
+  if (!me) return <div className="container"><div className="alert alert-error">{meError ?? 'No se pudo cargar tu perfil. Revisa la conexión con la API.'}</div></div>;
   if (admin && me.platformRole !== 'admin') {
     return <div className="container"><div className="alert alert-error">Esta sección es solo para administradores de plataforma.</div></div>;
   }
